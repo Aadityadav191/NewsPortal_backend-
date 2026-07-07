@@ -2,13 +2,16 @@ const express = require ('express');
 const app = express();
 const dotenv = require('dotenv');
 require('dotenv').config();
-const mongoose = require('mongoose');
-const  userRoutes = require('./routes/user.routes');
+const  authRoutes = require('./routes/auth.routes');
+const userRoutes = require('./routes/user.routes');
 const cors = require('cors');
 const helmet = require('helmet');
-// const requestLogger = require('./middleware/requestLogger');
+const connectDB = require('./config/db');
 
-const PORT= process.env.PORT || 5000;
+// Connect to MongoDB
+connectDB();
+
+const PORT= process.env.PORT || 8000;
 
 //Middleware 
 app.use(cors({
@@ -21,11 +24,15 @@ app.use(cors({
 }));
 app.use(helmet());
 app.use(express.json()) ;
-// app.use(requestLogger);
 
-//Routes
-app.use('/api/user', userRoutes);
+//Routes For authentication:
+app.use('/api/auth', authRoutes);
+
+//Routes For user management:
+app.use('/api/users', userRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running beautifully on http://localhost:${PORT}`);
 });
+
+
