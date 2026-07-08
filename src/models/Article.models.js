@@ -9,7 +9,6 @@ const articleSchema = new mongoose.Schema(
     },
     slug: {
       type: String,
-      required: true,
       unique: true,
       lowercase: true,
     },
@@ -56,4 +55,4 @@ const articleSchema = new mongoose.Schema(
 articleSchema.index({ status: 1, publishedAt: -1 });
 
 const Article = mongoose.model('Article', articleSchema);
-export default Article;
+module.exports = Article;
