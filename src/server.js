@@ -4,10 +4,11 @@ const dotenv = require('dotenv');
 require('dotenv').config();
 const cors = require('cors');
 const helmet = require('helmet');
-const connectDB = require('./config/db');
-const authRoutes = require('./routes/auth.routes');
-const userRoutes = require('./routes/user.routes');
-const articleRoutes = require('./routes/article.routes');
+const {connectDB} = require('./config/db');
+// const authRoutes = require('./routes/auth.routes');
+const authorsRoutes = require('./routes/authors.routes');
+const adminRoutes = require('./routes/admin.routes');
+const superadminRoutes =require('./routes/superadmin.routes')
 
 
 const PORT= process.env.PORT || 8000;
@@ -30,16 +31,16 @@ app.use(helmet());
 app.use(express.json()) ;
 
 //Routes For authentication:
-app.use('/api/auth', authRoutes);
+// app.use('/api/auth', authRoutes);
 
-//Routes For user management:
-app.use('/api/users', userRoutes);
+app.use('/api/authors', authorsRoutes);
 
-//Routes For article management:
-app.use('/api/articles', articleRoutes);
+app.use('/api/admin', adminRoutes);
+
+app.use('/api/superadmin',superadminRoutes)
 
 app.listen(PORT, () => {
-  console.log(`Server is running beautifully on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 

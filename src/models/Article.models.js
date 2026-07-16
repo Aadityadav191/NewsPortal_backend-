@@ -27,8 +27,8 @@ const articleSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['DRAFT', 'PENDING_APPROVAL', 'PUBLISHED', 'REJECTED'],
-      default: 'DRAFT',
+      enum: ['PENDING', 'APPROVED', 'REJECTED'],
+      default: 'PENDING',
     },
     approvedBy: {
       type: mongoose.Schema.Types.ObjectId,
@@ -40,9 +40,9 @@ const articleSchema = new mongoose.Schema(
       trim: true,
       default: null, // Filled only if status changes to 'REJECTED'
     },
-    publishedAt: {
+    APPROVEDAt: {
       type: Date,
-      default: null, // Set dynamically when status changes to 'PUBLISHED'
+      default: null, // Set dynamically when status changes to 'APPROVED'
     },
   },
   {
@@ -51,8 +51,8 @@ const articleSchema = new mongoose.Schema(
 );
 
 // Database Optimization: Indexing for fast public lookups
-// News sites fetch published articles constantly; indexing slug and status keeps things blazing fast.
-articleSchema.index({ status: 1, publishedAt: -1 });
+// News sites fetch APPROVED articles constantly; indexing slug and status keeps things blazing fast.
+articleSchema.index({ status: 1, APPROVEDAt: -1 });
 
 const Article = mongoose.model('Article', articleSchema);
 module.exports = Article;
