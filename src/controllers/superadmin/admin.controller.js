@@ -1,22 +1,20 @@
 const User = require("../../models/user.models");
 const logger = require("../../utils/logger");
 
-// =====================================
-// Get All Pending Admins
-// SUPER_ADMIN Only
-// =====================================
-const getPendingAdmins = async (req, res) => {
+// Get All Pending Admins SUPER_ADMIN Only
+
+const PendingAdmins = async (req, res) => {
   try {
     const admins = await User.find({
       role: "ADMIN",
       status: "PENDING",
     })
       .select("-password")
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: 1 });
 
     return res.status(200).json({
       success: true,
-      count: admins.length,
+      Total_Pending: admins.length,
       admins,
     });
   } catch (error) {
@@ -33,10 +31,8 @@ const getPendingAdmins = async (req, res) => {
 };
 
 
-// =====================================
 // Approve / Reject Admin
 // SUPER_ADMIN Only
-// =====================================
 const updateAdminStatus = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -104,6 +100,6 @@ const updateAdminStatus = async (req, res) => {
 };
 
 module.exports = {
-  getPendingAdmins,
+  PendingAdmins,
   updateAdminStatus,
 };

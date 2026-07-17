@@ -116,10 +116,8 @@ const adminlogin = async (req, res) => {
       });
     }
 
-    const token = generateToken({
-      id: admin._id,
-      role: admin.role,
-    });
+    //generate Token 
+    const token = generateToken(admin);
 
     admin.password = undefined;
 

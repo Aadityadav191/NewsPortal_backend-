@@ -55,10 +55,7 @@ const superAdminLogin = async (req, res) => {
     }
 
     // Generate token
-    const token = generateToken({
-      id: superAdmin._id,
-      role: superAdmin.role,
-    });
+    const token = generateToken(superAdmin);
 
     superAdmin.password = undefined;
 

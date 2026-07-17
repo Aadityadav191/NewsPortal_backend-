@@ -76,12 +76,12 @@ const authorlogin = async (req, res) => {
     }
 
     // Find only AUTHOR
-    const user = await User.findOne({
+    const author = await User.findOne({
       email,
       role: "AUTHOR",
     }).select("+password");
 
-    if (!user) {
+    if (!author) {
       return res.status(401).json({
         success: false,
         message: "Invalid credentials.",
@@ -89,7 +89,7 @@ const authorlogin = async (req, res) => {
     }
 
     // Compare password
-    const isMatch = await comparePassword(password, user.password);
+    const isMatch = await comparePassword(password, author.password);
 
     if (!isMatch) {
       return res.status(401).json({
@@ -99,7 +99,7 @@ const authorlogin = async (req, res) => {
     }
 
     // Check approval
-    if (user.status !== "APPROVED") {
+    if (author.status !== "APPROVED") {
       return res.status(403).json({
         success: false,
         message: "Your account has not been approved yet to Login.",
@@ -107,7 +107,7 @@ const authorlogin = async (req, res) => {
     }
 
     // Check active status
-    if (!user.isActive) {
+    if (!author.isActive) {
       return res.status(403).json({
         success: false,
         message: "Your account is inactive. Please contact the administrator.",
@@ -115,24 +115,21 @@ const authorlogin = async (req, res) => {
     }
 
     // Generate JWT
-    const token = generateToken({
-      id: user._id,
-      role: user.role,
-    });
+    const token = generateToken(author);
 
-    user.password = undefined;
+    author.password = undefined;
 
     return res.status(200).json({
       success: true,
       message: "Logged in successfully.",
       token,
       user: {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        status: user.status,
-        isActive: user.isActive,
+        _id: author._id,
+        name: author.name,
+        email: author.email,
+        role: author.role,
+        status: author.status,
+        isActive: author.isActive,
       },
     });
   } catch (error) {
