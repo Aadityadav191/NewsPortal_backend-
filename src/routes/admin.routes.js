@@ -28,7 +28,7 @@ router.use(protect);
 
 router.use(restrictTo("ADMIN", "SUPER_ADMIN"));
 
-router.get("/pending-author", PendingAuthors);
+router.get("/pending-authors", PendingAuthors);
 router.patch("/approve-author/:userId", updateAuthorStatus);
 
 router.get("/pending-articles", PendingArticles);

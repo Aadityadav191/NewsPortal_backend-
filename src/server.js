@@ -31,7 +31,6 @@ app.use(helmet());
 app.use(express.json()) ;
 
 //Routes For authentication:
-// app.use('/api/auth', authRoutes);
 
 app.use('/api/authors', authorsRoutes);
 

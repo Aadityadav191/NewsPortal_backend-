@@ -6,8 +6,8 @@ const { authorlogin, authorsignup } = require("../controllers/author/auth.contro
 const router = express.Router();
 
 
-router.post("/login",authorlogin);
 router.post("/signup",authorsignup);
+router.post("/login",authorlogin);
 
 //Protected Routes
 router.use(protect);

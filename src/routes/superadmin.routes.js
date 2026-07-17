@@ -14,7 +14,7 @@ const {
   updateArticleStatus,
 } = require("../controllers/superadmin/article.controller.js");
 const {
-  getPendingAdmins,
+  PendingAdmins,
   updateAdminStatus,
 } = require("../controllers/superadmin/admin.controller.js");
 
@@ -28,7 +28,7 @@ router.use(protect);
 
 router.use(restrictTo("SUPER_ADMIN"));
 
-router.get("/pending-admins", getPendingAdmins);
+router.get("/pending-admins", PendingAdmins);
 router.patch("/approve-admin/:userId", updateAdminStatus);
 
 module.exports = router;

@@ -54,5 +54,5 @@ const articleSchema = new mongoose.Schema(
 // News sites fetch APPROVED articles constantly; indexing slug and status keeps things blazing fast.
 articleSchema.index({ status: 1, APPROVEDAt: -1 });
 
-const Article = mongoose.model('Article', articleSchema);
-module.exports = Article;
+module.exports =
+  mongoose.models.Article || mongoose.model('Article', articleSchema);
