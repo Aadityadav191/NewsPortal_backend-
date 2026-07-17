@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user.models.js");
 const { promisify } = require("util");
 const { hashPassword, comparePassword } = require("../utils/password.js");
-const generateToken = require("../utils/jwt.js");
+// const generateToken = require("../utils/jwt.js");
 
 // Middleware to protect routes Verify if the user is logged in
 
@@ -22,9 +22,9 @@ const protect = async (req, res, next) => {
       });
     }
 
-    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log(decoded);
-    const currentUser = await User.findById(decoded.id.id);
+    const currentUser = await User.findById(decoded.id);
     if (!currentUser) {
       return res.status(401).json({ message: "Unauthorized access" });
     }
