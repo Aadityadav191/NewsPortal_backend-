@@ -30,7 +30,6 @@ const PendingAdmins = async (req, res) => {
   }
 };
 
-
 // Approve / Reject Admin
 // SUPER_ADMIN Only
 const updateAdminStatus = async (req, res) => {
@@ -76,6 +75,10 @@ const updateAdminStatus = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: `Admin ${status.toLowerCase()} successfully.`,
+      approvedBy: {
+        name: req.user.name,
+        role: req.user.role,
+      },
       admin: {
         _id: admin._id,
         name: admin.name,
@@ -85,7 +88,6 @@ const updateAdminStatus = async (req, res) => {
         isActive: admin.isActive,
       },
     });
-
   } catch (error) {
     logger.error("Failed to update admin status", {
       message: error.message,
