@@ -20,6 +20,25 @@ const articleSchema = new mongoose.Schema(
       type: String, 
       required: [true, 'Featured image is required'],
     },
+    category: {
+      type: String,
+      required: [true, 'Article category is required'],
+      enum: [
+        'FINANCE',
+        'POLITICS',
+        'ENTERTAINMENT',
+        'SPORTS',
+        'TECHNOLOGY',
+        'BUSINESS',
+        'HEALTH',
+        'SCIENCE',
+        'EDUCATION',
+        'LIFESTYLE',
+        'TRAVEL',
+        'WORLD',
+      ],
+    },
+
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User', // Establishes relationship to the User model
