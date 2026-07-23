@@ -9,4 +9,4 @@ const generateToken = (user) => {
   );
 };
 
-module.exports = generateToken;
+module.exports = {generateToken};

@@ -7,7 +7,7 @@ const logger = require("../../utils/logger.js");
 // Author Signup
 const authorsignup = async (req, res) => {
   try {
-    const { name, email, password , } = req.body;
+    const { name, email, password } = req.body;
     if (!name || !email || !password ) {
       return res.status(400).json({
         success: false,
@@ -21,7 +21,7 @@ const authorsignup = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: "User already registered with this email.",
+        message: "Author already registered with this email.",
       });
     }
 
@@ -64,88 +64,88 @@ const authorsignup = async (req, res) => {
 
  
 // Author Login
-const authorlogin = async (req, res) => {
-  try {
-    const { email, password } = req.body;
+// const authorlogin = async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({
-        success: false,
-        message: "Please fill all fields.",
-      });
-    }
+//     if (!email || !password) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Please fill all fields.",
+//       });
+//     }
 
-    // Find only AUTHOR
-    const author = await User.findOne({
-      email,
-      role: "AUTHOR",
-    }).select("+password");
+//     // Find only AUTHOR
+//     const author = await User.findOne({
+//       email,
+//       role: "AUTHOR",
+//     }).select("+password");
 
-    if (!author) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid credentials.",
-      });
-    }
+//     if (!author) {
+//       return res.status(401).json({
+//         success: false,
+//         message: "Invalid credentials.",
+//       });
+//     }
 
-    // Compare password
-    const isMatch = await comparePassword(password, author.password);
+//     // Compare password
+//     const isMatch = await comparePassword(password, author.password);
 
-    if (!isMatch) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid credentials.",
-      });
-    }
+//     if (!isMatch) {
+//       return res.status(401).json({
+//         success: false,
+//         message: "Invalid credentials.",
+//       });
+//     }
 
-    // Check approval
-    if (author.status !== "APPROVED") {
-      return res.status(403).json({
-        success: false,
-        message: "Your account has not been approved yet to Login.",
-      });
-    }
+//     // Check approval
+//     if (author.status !== "APPROVED") {
+//       return res.status(403).json({
+//         success: false,
+//         message: "Your account has not been approved yet to Login.",
+//       });
+//     }
 
-    // Check active status
-    if (!author.isActive) {
-      return res.status(403).json({
-        success: false,
-        message: "Your account is inactive. Please contact the administrator.",
-      });
-    }
+//     // Check active status
+//     if (!author.isActive) {
+//       return res.status(403).json({
+//         success: false,
+//         message: "Your account is inactive. Please contact the administrator.",
+//       });
+//     }
 
-    // Generate JWT
-    const token = generateToken(author);
+//     // Generate JWT
+//     const token = generateToken(author);
 
-    author.password = undefined;
+//     author.password = undefined;
 
-    return res.status(200).json({
-      success: true,
-      message: "Logged in successfully.",
-      token,
-      user: {
-        _id: author._id,
-        name: author.name,
-        email: author.email,
-        role: author.role,
-        status: author.status,
-        isActive: author.isActive,
-      },
-    });
-  } catch (error) {
-    logger.error("Author login failed", {
-      message: error.message,
-      stack: error.stack,
-    });
+//     return res.status(200).json({
+//       success: true,
+//       message: "Logged in successfully.",
+//       token,
+//       user: {
+//         _id: author._id,
+//         name: author.name,
+//         email: author.email,
+//         role: author.role,
+//         status: author.status,
+//         isActive: author.isActive,
+//       },
+//     });
+//   } catch (error) {
+//     logger.error("Author login failed", {
+//       message: error.message,
+//       stack: error.stack,
+//     });
 
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+//     return res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
 
 module.exports = {
   authorsignup,
-  authorlogin,
+
 };

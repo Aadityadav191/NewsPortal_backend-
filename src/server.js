@@ -8,7 +8,9 @@ const {connectDB} = require('./config/db');
 // const authRoutes = require('./routes/auth.routes');
 const authorsRoutes = require('./routes/authors.routes');
 const adminRoutes = require('./routes/admin.routes');
-const superadminRoutes =require('./routes/superadmin.routes')
+const superadminRoutes =require('./routes/superadmin.routes');
+const authRoutes =require('./routes/auth.routes')
+
 
 
 const PORT= process.env.PORT || 8000;
@@ -32,11 +34,15 @@ app.use(express.json()) ;
 
 //Routes For authentication:
 
-app.use('/api/authors', authorsRoutes);
+// app.use('/api/auth' , authRotes)
 
-app.use('/api/admin', adminRoutes);
+app.use('/api/v1/auth', authRoutes);
 
-app.use('/api/superadmin',superadminRoutes)
+app.use('/api/v1/authors', authorsRoutes);
+
+app.use('/api/v1/admin', adminRoutes);
+
+app.use('/api/v1/superadmin',superadminRoutes)
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

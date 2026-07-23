@@ -1,10 +1,10 @@
 const Article = require("../../models/Article.models");
 
-// Author creates a new article 
+// Author creates a new article
 const createArticle = async (req, res) => {
   try {
-    const { title, content , featuredImage } = req.body;
-    
+    const { title, content, featuredImage, category } = req.body;
+
     if (!title?.trim()) {
       return res.status(400).json({
         message: "Title is required.",
@@ -22,6 +22,12 @@ const createArticle = async (req, res) => {
         message: "Please upload a featured image banner.",
       });
     }
+
+    if (!category) {
+        return res.status(400).json({
+          message: "Please fill category Section.",
+        });
+      }
 
     // Generate slug
     const slug = `${title
@@ -92,7 +98,6 @@ const createArticle = async (req, res) => {
 //     res.status(500).json({ message: error.message });
 //   }
 // };
-
 
 // //Get all APPROVED articles
 // const getPublicArticles = async (req, res) => {

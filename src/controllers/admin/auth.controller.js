@@ -150,3 +150,71 @@ module.exports = {
   adminsignup,
   adminlogin,
 };
+
+
+
+// Admin Signup
+// const signup = async (req, res) => {
+//   try {
+//     const { name, email, password ,role } = req.body;
+
+//     if (!name || !email || !password || !role) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Please fill all required fields.",
+//       });
+//     }
+
+//     // Allow only ADMIN or AUTHOR
+//     const allowedRoles = ["ADMIN", "AUTHOR"];
+//     if (!allowedRoles.includes(role.toUpperCase())) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Invalid role selected.",
+//       });
+//     }
+
+//     // Check if email already exists
+//     const existingUser = await User.findOne({ email });
+
+//     if (existingUser) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "User already exists with this email.",
+//       });
+//     }
+
+//     const hashedPassword = await hashPassword(password);
+
+//     const admin = await User.create({
+//       name,
+//       email,
+//       password: hashedPassword,
+//       role: role.toUpperCase(),
+//       status: "PENDING",
+//       isActive: false,
+//     });
+
+//     return res.status(201).json({
+//       success: true,
+//       message: `${role.toUpperCase()} registration successful. Please wait for Super Admin approval.`,
+//       user: {
+//         _id: user._id,
+//         name: user.name,
+//         email: user.email,
+//         role: user.role,
+//         status: user.status,
+//       },
+//     });
+//   } catch (error) {
+//     logger.error("signup failed", {
+//       message: error.message,
+//       stack: error.stack,
+//     });
+
+//     return res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
