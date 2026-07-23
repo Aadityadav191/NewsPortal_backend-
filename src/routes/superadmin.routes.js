@@ -1,9 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-const {
-  superAdminLogin,
-} = require("../controllers/superAdmin/auth.controller.js");
 const { protect, restrictTo } = require("../middleware/auth.middleware.js");
 const {
   updateAuthorStatus,
@@ -17,9 +14,10 @@ const {
   PendingAdmins,
   updateAdminStatus,
 } = require("../controllers/superadmin/admin.controller.js");
+const { loginController } = require("../controllers/auth.Controller.js");
 
 // Public
-router.post("/login", superAdminLogin);
+router.post("/login", loginController);
 
 // Protected routes allow only after Login
 router.use(protect);

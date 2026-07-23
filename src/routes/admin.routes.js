@@ -3,7 +3,7 @@ const router = express.Router();
 
 const {
   adminsignup,
-  adminlogin,
+  // adminlogin,
 } = require("../controllers/admin/auth.controller.js");
 
 const {
@@ -19,7 +19,6 @@ const {
 
 // Public Routes
 router.post("/signup", adminsignup);
-router.post("/login", adminlogin);
 
 // Protected Routes
 router.use(protect);
